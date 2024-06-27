@@ -33,30 +33,30 @@ class DBStorage:
         if env == "test":
             Base.metadata.drop_all(self.__engine)
 
-    def all(self, cls=None):
+    def all(self, cll=None):
         """returns a dictionary
         Return:
             returns a dictionary of __object
         """
         dic = {}
-        if cls:
-            if type(cls) is str:
-                cls = eval(cls)
-            query = self.__session.query(cls)
-            for elem in query:
-                key = "{}.{}".format(type(elem).__name__, elem.id)
-                dic[key] = elem
+        if cll:
+            if type(cll) is str:
+                cll = eval(cll)
+            query = self.__session.query(cll)
+            for item in query:
+                key = "{}.{}".format(type(item).__name__, item.id)
+                dic[key] = item
         else:
             lista = [State, City, User, Place, Review, Amenity]
-            for clase in lista:
-                query = self.__session.query(clase)
-                for elem in query:
-                    key = "{}.{}".format(type(elem).__name__, elem.id)
-                    dic[key] = elem
+            for claass in lista:
+                query = self.__session.query(claass)
+                for item in query:
+                    key = "{}.{}".format(type(item).__name__, item.id)
+                    dic[key] = item
         return (dic)
 
     def new(self, obj):
-        """add a new element in the table
+        """add a new itement in the table
         """
         self.__session.add(obj)
 
@@ -68,8 +68,9 @@ class DBStorage:
     def delete(self, obj=None):
         """delete an element in the table
         """
-        if obj:
-            self.session.delete(obj)
+        if obj is not None:
+            self.__session.query(type(obj)).filter(
+                type(obj).id == obj.id).delete()
 
     def reload(self):
         """configuration
