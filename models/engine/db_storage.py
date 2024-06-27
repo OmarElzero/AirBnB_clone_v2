@@ -33,16 +33,16 @@ class DBStorage:
         if env == "test":
             Base.metadata.drop_all(self.__engine)
 
-    def all(self, cll=None):
+    def all(self, cls=None):
         """returns a dictionary
         Return:
             returns a dictionary of __object
         """
         dic = {}
-        if cll:
-            if type(cll) is str:
-                cll = eval(cll)
-            query = self.__session.query(cll)
+        if cls:
+            if type(cls) is str:
+                cls = eval(cls)
+            query = self.__session.query(cls)
             for item in query:
                 key = "{}.{}".format(type(item).__name__, item.id)
                 dic[key] = item
